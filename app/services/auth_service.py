@@ -1,0 +1,36 @@
+from sqlmodel import Session
+from app.models.employee import Employee, EmployeeStatus
+from app.models.Admin import Admin
+from app.core.security import verify_password, hash_password, create_access_token
+from datetime import timedelta
+from typing import Union
+def authenticate_employee(session: Session, email: str, password: str):
+    employee = session.query(Employee).filter(Employee.email == email).first()
+    if not employee or not verify_password(password, employee.password):
+        return None
+    return employee
+
+def register_employee(session: Session, name: str, email: str, password: str, task_capacity: int = None, available_hours: int = None):
+    hashed_pw = hash_password(password)
+    employee = Employee(
+        name=name,
+        email=email,
+        password=hashed_pw,
+        task_capacity=task_capacity,
+        available_hours=available_hours,
+        status=EmployeeStatus.available,
+        role = "employee"
+    )
+    session.add(employee)
+    session.commit()
+    session.refresh(employee)
+    return employee
+
+def generate_token(user: Union[Employee, Admin]):
+
+    payload = {
+        "sub": str(user.id),
+        "email": user.email,
+        "role": user.role
+    }
+    return create_access_token(payload, timedelta(minutes=60))
