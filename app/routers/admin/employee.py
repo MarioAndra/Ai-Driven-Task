@@ -17,6 +17,7 @@ from app.api.v1.admin.employee_controller import (
     update_employee_controller,
 )
 
+
 router = APIRouter()
 
 @router.get("/", response_model=List[Employee])

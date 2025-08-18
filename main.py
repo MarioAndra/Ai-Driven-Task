@@ -11,9 +11,7 @@ def on_startup():
 
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])
 
-
 app.include_router(
     admin_router,
     prefix="/api/v1/admin"
-
 )
