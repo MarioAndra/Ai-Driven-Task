@@ -26,6 +26,12 @@ def register_employee(session: Session, name: str, email: str, password: str, ta
     session.refresh(employee)
     return employee
 
+def authenticate_admin(session: Session, email: str, password: str):
+    admin = session.query(Admin).filter(Admin.email == email).first()
+    if not admin or not verify_password(password, admin.password):
+        return None
+    return admin
+
 def generate_token(user: Union[Employee, Admin]):
 
     payload = {
