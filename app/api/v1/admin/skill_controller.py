@@ -1,4 +1,4 @@
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from fastapi import Depends
 from app.core.database import get_session
 from app.schemas.skill import SkillCreate, SkillUpdate
@@ -9,17 +9,17 @@ from typing import List
 
 class SkillController:
     @staticmethod
-    async def create_skill(skill_data: SkillCreate, db: AsyncSession = Depends(get_session)) -> Skill:
-        return await SkillService.create_skill(skill_data, db)
+    def create_skill(skill_data: SkillCreate, db: Session = Depends(get_session)) -> Skill:
+        return SkillService.create_skill(skill_data, db)
 
     @staticmethod
-    async def update_skill(skill_id: int, skill_data: SkillUpdate, db: AsyncSession = Depends(get_session)) -> Skill:
-        return await SkillService.update_skill(skill_id, skill_data, db)
+    def update_skill(skill_id: int, skill_data: SkillUpdate, db: Session = Depends(get_session)) -> Skill:
+        return SkillService.update_skill(skill_id, skill_data, db)
 
     @staticmethod
-    async def delete_skill(skill_id: int, db: AsyncSession = Depends(get_session)) -> None:
-        return await SkillService.delete_skill(skill_id, db)
+    def delete_skill(skill_id: int, db: Session = Depends(get_session)) -> None:
+        return SkillService.delete_skill(skill_id, db)
 
     @staticmethod
-    async def list_skills(db: AsyncSession = Depends(get_session)) -> List[Skill]:
-        return await SkillService.list_skills(db)
+    def list_skills(db: Session = Depends(get_session)) -> List[Skill]:
+        return SkillService.list_skills(db)
