@@ -3,6 +3,8 @@ from sqlmodel import Field, Relationship, SQLModel
 from sqlalchemy import Column, Enum as SQLAlchemyEnum
 import enum
 from sqlalchemy import Column, String
+from datetime import date
+
 from .base import TimeStampedModel
 from .EmployeeSkillLink import EmployeeSkillLink
 
@@ -26,5 +28,12 @@ class Employee(TimeStampedModel, table=True):
     task_capacity: Optional[int] = None
     available_hours: Optional[int] = None
 
+
+    phone_number: Optional[str] = Field(default=None, max_length=20)
+    address: Optional[str] = Field(default=None, max_length=255)
+    birth_date: Optional[date] = None
+
     assignments: List["Assignment"] = Relationship(back_populates="employee")
-    skills: List["Skill"] = Relationship(back_populates="employees", link_model=EmployeeSkillLink)
+    skills: List["Skill"] = Relationship(
+        back_populates="employees", link_model=EmployeeSkillLink
+    )
