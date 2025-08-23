@@ -4,20 +4,31 @@ from fastapi import HTTPException
 from app.models.employee import Employee
 from app.models.skill import Skill
 from app.models.EmployeeSkillLink import EmployeeSkillLink
-from app.schemas.employee_skill import EmployeeSkillCreate, EmployeeSkillUpdate
+from app.schemas.employee_skill import EmployeeSkillCreate, EmployeeSkillUpdate, EmployeeSkillRead
 
 
 class EmployeeSkillService:
     @staticmethod
-    def get_employee_skills(employee_id: int, db: Session):
+    def get_employee_skills(employee_id: int, db: Session) -> list[EmployeeSkillRead]:
+        """
+        Retrieves a list of skills and ratings for a given employee,
+        and returns them as a list of EmployeeSkillRead Pydantic models.
+        """
+        
         result = db.execute(
             select(Skill.id, Skill.name, EmployeeSkillLink.rating)
             .join(EmployeeSkillLink, Skill.id == EmployeeSkillLink.skill_id)
             .where(EmployeeSkillLink.employee_id == employee_id)
         )
-        skills = result.all()
-        return [{"id": s.id, "name": s.name, "rating": s.rating} for s in skills]
-
+        
+        # We process the result into a list of Pydantic models.
+        # This ensures the data matches the expected schema and avoids validation errors.
+        skills = [
+            EmployeeSkillRead(id=s[0], name=s[1], rating=s[2]) 
+            for s in result.all()
+        ]
+        return skills
+#####################################################################################################
     @staticmethod
     def add_employee_skill(employee_id: int, skill_data: EmployeeSkillCreate, db: Session):
         emp_result = db.execute(select(Employee).where(Employee.id == employee_id))
@@ -48,7 +59,7 @@ class EmployeeSkillService:
         db.add(new_link)
         db.commit()
         return {"detail": "Skill added to employee successfully"}
-
+##############################################################################################
     @staticmethod
     def update_employee_skill(employee_id: int, skill_id: int, skill_data: EmployeeSkillUpdate, db: Session):
         result = db.execute(
