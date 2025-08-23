@@ -1,19 +1,15 @@
 from pydantic import BaseModel
 from typing import Optional
 
-
 class EmployeeSkillBase(BaseModel):
     skill_id: int
     rating: int
 
-
 class EmployeeSkillCreate(EmployeeSkillBase):
     pass
 
-
 class EmployeeSkillUpdate(BaseModel):
     rating: Optional[int] = None
-
 
 class EmployeeSkillRead(BaseModel):
     id: int
@@ -21,4 +17,4 @@ class EmployeeSkillRead(BaseModel):
     rating: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True 
