@@ -5,8 +5,17 @@ from typing import Optional
 from app.core.database import get_session
 from app.api.v1.admin.task_controller import TaskController
 
+from app.schemas.task import TaskCreate, AnswersPayload
 router = APIRouter()
 
+
+@router.post("/")
+def create(task_in: TaskCreate, db: Session = Depends(get_session)):
+    return TaskController.create(task_in, db)
+
+@router.post("/{task_id}/process-answers")
+async def process_answers(task_id: int, payload: AnswersPayload, db: Session = Depends(get_session)):
+    return  TaskController.generate_and_assign_subtasks(task_id, payload, db)
 
 @router.get("/")
 def index(db: Session = Depends(get_session)):

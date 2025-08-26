@@ -1,0 +1,15 @@
+[
+    {
+        "name": "MARIO",
+        "skills": [
+            {
+                "name": "mysql",
+                "rating": 4
+            }
+        ],
+        "status": "available",
+        "assigned_tasks": [],
+        "task_capacity": 2,
+        "available_hours": 8
+    }
+]

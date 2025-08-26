@@ -1,7 +1,15 @@
 fastapi
 uvicorn[standard]
 sqlmodel
+sqlalchemy
 passlib[bcrypt]
 python-jose
 alembic
 python-multipart
+pydantic
+pydantic-settings
+jinja2
+transformers
+torch
+accelerate
+scipy
