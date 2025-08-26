@@ -1,0 +1,119 @@
+2025-08-22 18:11:52,031 - INFO - SELECT DATABASE()
+2025-08-22 18:11:52,031 - INFO - [raw sql] ()
+2025-08-22 18:11:52,032 - INFO - SELECT @@sql_mode
+2025-08-22 18:11:52,032 - INFO - [raw sql] ()
+2025-08-22 18:11:52,032 - INFO - SELECT @@lower_case_table_names
+2025-08-22 18:11:52,032 - INFO - [raw sql] ()
+2025-08-22 18:11:52,033 - INFO - BEGIN (implicit)
+2025-08-22 18:11:52,033 - INFO - DESCRIBE `ai-task-driven`.`admin`
+2025-08-22 18:11:52,033 - INFO - [raw sql] ()
+2025-08-22 18:11:52,050 - INFO - DESCRIBE `ai-task-driven`.`assignment`
+2025-08-22 18:11:52,050 - INFO - [raw sql] ()
+2025-08-22 18:11:52,056 - INFO - DESCRIBE `ai-task-driven`.`employeeskilllink`
+2025-08-22 18:11:52,057 - INFO - [raw sql] ()
+2025-08-22 18:11:52,063 - INFO - DESCRIBE `ai-task-driven`.`employee`
+2025-08-22 18:11:52,063 - INFO - [raw sql] ()
+2025-08-22 18:11:52,069 - INFO - DESCRIBE `ai-task-driven`.`skill`
+2025-08-22 18:11:52,070 - INFO - [raw sql] ()
+2025-08-22 18:11:52,076 - INFO - DESCRIBE `ai-task-driven`.`subtask`
+2025-08-22 18:11:52,077 - INFO - [raw sql] ()
+2025-08-22 18:11:52,080 - INFO - DESCRIBE `ai-task-driven`.`task`
+2025-08-22 18:11:52,081 - INFO - [raw sql] ()
+2025-08-22 18:11:52,088 - INFO - COMMIT
+2025-08-22 18:14:49,948 - INFO - SELECT DATABASE()
+2025-08-22 18:14:49,949 - INFO - [raw sql] ()
+2025-08-22 18:14:49,949 - INFO - SELECT @@sql_mode
+2025-08-22 18:14:49,949 - INFO - [raw sql] ()
+2025-08-22 18:14:49,950 - INFO - SELECT @@lower_case_table_names
+2025-08-22 18:14:49,950 - INFO - [raw sql] ()
+2025-08-22 18:14:49,950 - INFO - BEGIN (implicit)
+2025-08-22 18:14:49,950 - INFO - DESCRIBE `ai-task-driven`.`admin`
+2025-08-22 18:14:49,951 - INFO - [raw sql] ()
+2025-08-22 18:14:49,965 - INFO - DESCRIBE `ai-task-driven`.`assignment`
+2025-08-22 18:14:49,966 - INFO - [raw sql] ()
+2025-08-22 18:14:49,970 - INFO - DESCRIBE `ai-task-driven`.`employeeskilllink`
+2025-08-22 18:14:49,970 - INFO - [raw sql] ()
+2025-08-22 18:14:49,978 - INFO - DESCRIBE `ai-task-driven`.`employee`
+2025-08-22 18:14:49,979 - INFO - [raw sql] ()
+2025-08-22 18:14:49,983 - INFO - DESCRIBE `ai-task-driven`.`skill`
+2025-08-22 18:14:49,984 - INFO - [raw sql] ()
+2025-08-22 18:14:49,990 - INFO - DESCRIBE `ai-task-driven`.`subtask`
+2025-08-22 18:14:49,990 - INFO - [raw sql] ()
+2025-08-22 18:14:49,997 - INFO - DESCRIBE `ai-task-driven`.`task`
+2025-08-22 18:14:49,997 - INFO - [raw sql] ()
+2025-08-22 18:14:50,003 - INFO - COMMIT
+2025-08-22 18:15:50,795 - INFO - SELECT DATABASE()
+2025-08-22 18:15:50,795 - INFO - [raw sql] ()
+2025-08-22 18:15:50,796 - INFO - SELECT @@sql_mode
+2025-08-22 18:15:50,796 - INFO - [raw sql] ()
+2025-08-22 18:15:50,796 - INFO - SELECT @@lower_case_table_names
+2025-08-22 18:15:50,796 - INFO - [raw sql] ()
+2025-08-22 18:15:50,797 - INFO - BEGIN (implicit)
+2025-08-22 18:15:50,797 - INFO - DESCRIBE `ai-task-driven`.`admin`
+2025-08-22 18:15:50,797 - INFO - [raw sql] ()
+2025-08-22 18:15:50,810 - INFO - DESCRIBE `ai-task-driven`.`assignment`
+2025-08-22 18:15:50,810 - INFO - [raw sql] ()
+2025-08-22 18:15:50,815 - INFO - DESCRIBE `ai-task-driven`.`employeeskilllink`
+2025-08-22 18:15:50,815 - INFO - [raw sql] ()
+2025-08-22 18:15:50,820 - INFO - DESCRIBE `ai-task-driven`.`employee`
+2025-08-22 18:15:50,821 - INFO - [raw sql] ()
+2025-08-22 18:15:50,826 - INFO - DESCRIBE `ai-task-driven`.`skill`
+2025-08-22 18:15:50,826 - INFO - [raw sql] ()
+2025-08-22 18:15:50,831 - INFO - DESCRIBE `ai-task-driven`.`subtask`
+2025-08-22 18:15:50,832 - INFO - [raw sql] ()
+2025-08-22 18:15:50,839 - INFO - DESCRIBE `ai-task-driven`.`task`
+2025-08-22 18:15:50,839 - INFO - [raw sql] ()
+2025-08-22 18:15:50,846 - INFO - COMMIT
+2025-08-22 18:19:16,284 - INFO - SELECT DATABASE()
+2025-08-22 18:19:16,285 - INFO - [raw sql] ()
+2025-08-22 18:19:16,285 - INFO - SELECT @@sql_mode
+2025-08-22 18:19:16,285 - INFO - [raw sql] ()
+2025-08-22 18:19:16,286 - INFO - SELECT @@lower_case_table_names
+2025-08-22 18:19:16,286 - INFO - [raw sql] ()
+2025-08-22 18:19:16,286 - INFO - BEGIN (implicit)
+2025-08-22 18:19:16,286 - INFO - DESCRIBE `ai-task-driven`.`admin`
+2025-08-22 18:19:16,287 - INFO - [raw sql] ()
+2025-08-22 18:19:16,301 - INFO - DESCRIBE `ai-task-driven`.`assignment`
+2025-08-22 18:19:16,301 - INFO - [raw sql] ()
+2025-08-22 18:19:16,305 - INFO - DESCRIBE `ai-task-driven`.`employeeskilllink`
+2025-08-22 18:19:16,305 - INFO - [raw sql] ()
+2025-08-22 18:19:16,309 - INFO - DESCRIBE `ai-task-driven`.`employee`
+2025-08-22 18:19:16,309 - INFO - [raw sql] ()
+2025-08-22 18:19:16,313 - INFO - DESCRIBE `ai-task-driven`.`skill`
+2025-08-22 18:19:16,313 - INFO - [raw sql] ()
+2025-08-22 18:19:16,318 - INFO - DESCRIBE `ai-task-driven`.`subtask`
+2025-08-22 18:19:16,319 - INFO - [raw sql] ()
+2025-08-22 18:19:16,323 - INFO - DESCRIBE `ai-task-driven`.`task`
+2025-08-22 18:19:16,323 - INFO - [raw sql] ()
+2025-08-22 18:19:16,328 - INFO - COMMIT
+2025-08-22 18:19:30,843 - INFO - SELECT DATABASE()
+2025-08-22 18:19:30,844 - INFO - [raw sql] ()
+2025-08-22 18:19:30,844 - INFO - SELECT @@sql_mode
+2025-08-22 18:19:30,844 - INFO - [raw sql] ()
+2025-08-22 18:19:30,845 - INFO - SELECT @@lower_case_table_names
+2025-08-22 18:19:30,845 - INFO - [raw sql] ()
+2025-08-22 18:19:30,848 - INFO - BEGIN (implicit)
+2025-08-22 18:19:30,849 - INFO - DESCRIBE `ai-task-driven`.`admin`
+2025-08-22 18:19:30,850 - INFO - [raw sql] ()
+2025-08-22 18:19:30,905 - INFO - DESCRIBE `ai-task-driven`.`assignment`
+2025-08-22 18:19:30,905 - INFO - [raw sql] ()
+2025-08-22 18:19:30,918 - INFO - DESCRIBE `ai-task-driven`.`employeeskilllink`
+2025-08-22 18:19:30,918 - INFO - [raw sql] ()
+2025-08-22 18:19:30,933 - INFO - DESCRIBE `ai-task-driven`.`employee`
+2025-08-22 18:19:30,934 - INFO - [raw sql] ()
+2025-08-22 18:19:30,941 - INFO - DESCRIBE `ai-task-driven`.`skill`
+2025-08-22 18:19:30,942 - INFO - [raw sql] ()
+2025-08-22 18:19:30,951 - INFO - DESCRIBE `ai-task-driven`.`subtask`
+2025-08-22 18:19:30,952 - INFO - [raw sql] ()
+2025-08-22 18:19:30,956 - INFO - DESCRIBE `ai-task-driven`.`task`
+2025-08-22 18:19:30,957 - INFO - [raw sql] ()
+2025-08-22 18:19:30,966 - INFO - COMMIT
+2025-08-24 04:46:42,859 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos02@gmail.com']
+2025-08-24 04:47:55,863 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-24 04:49:26,694 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-24 04:49:54,586 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-24 04:50:23,149 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-24 04:51:53,835 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-24 04:52:05,989 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-26 03:21:06,955 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos02@gmail.com']
+2025-08-26 03:22:15,151 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos02@gmail.com']

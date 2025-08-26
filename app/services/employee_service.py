@@ -2,7 +2,7 @@ from typing import List, Optional
 from sqlmodel import Session, select
 
 from app.models.employee import Employee, EmployeeStatus
-# تعديل: استيراد النموذج من ملف schemas
+
 from app.schemas.employee import EmployeeUpdateRequest
 
 
