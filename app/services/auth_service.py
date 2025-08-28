@@ -2,14 +2,16 @@ from sqlmodel import Session
 from app.models.employee import Employee, EmployeeStatus
 from app.models.Admin import Admin
 from app.core.security import verify_password, hash_password, create_access_token
-from datetime import timedelta
+from datetime import timedelta, date
 from typing import Union
-from datetime import date
+
+
 def authenticate_employee(session: Session, email: str, password: str):
     employee = session.query(Employee).filter(Employee.email == email).first()
     if not employee or not verify_password(password, employee.password):
         return None
     return employee
+
 
 def register_employee(
     session: Session,
@@ -20,7 +22,8 @@ def register_employee(
     available_hours: int = None,
     phone_number: str = None,
     address: str = None,
-    birth_date: date = None
+    birth_date: date = None,
+    profile_image: str = None
 ):
     existing = session.query(Employee).filter(Employee.email == email).first()
     if existing:
@@ -38,11 +41,13 @@ def register_employee(
         birth_date=birth_date,
         status=EmployeeStatus.available,
         role="employee",
+        profile_image=profile_image,
     )
     session.add(employee)
     session.commit()
     session.refresh(employee)
     return employee
+
 
 def authenticate_admin(session: Session, email: str, password: str):
     admin = session.query(Admin).filter(Admin.email == email).first()
@@ -50,8 +55,8 @@ def authenticate_admin(session: Session, email: str, password: str):
         return None
     return admin
 
-def generate_token(user: Union[Employee, Admin]):
 
+def generate_token(user: Union[Employee, Admin]):
     payload = {
         "sub": str(user.id),
         "email": user.email,

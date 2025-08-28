@@ -10,11 +10,11 @@ from app.routers.employee import router as employee_router
 from app.core.logging_config import setup_logging
 from app.models.skill import Skill
 from app.routers.admin import router as subTask_router
-
+from fastapi.staticfiles import StaticFiles
 setup_logging()
 app = FastAPI()
 
-
+app.mount("/media/employee", StaticFiles(directory="Media/employee"), name="employee_media")
 origins = [
     "http://localhost:5173",
 ]

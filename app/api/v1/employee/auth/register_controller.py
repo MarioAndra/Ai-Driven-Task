@@ -1,21 +1,34 @@
+import os
 from sqlmodel import Session
-from app.schemas.auth import RegisterRequest
+from fastapi import Request
 from app.services.auth_service import register_employee, generate_token
 
+UPLOAD_DIR = "Media/employee"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
+def register_controller(session: Session, request_data: dict, request: Request):
+    profile_image = request_data.pop("profile_image", None)
 
-def register_controller(session: Session, request: RegisterRequest):
+    image_path = None
+    profile_url = None
+
+    if profile_image:
+        file_ext = os.path.splitext(profile_image.filename)[1]
+        file_name = f"{request_data['email']}{file_ext}"
+        image_path = os.path.join(UPLOAD_DIR, file_name)
+
+        with open(image_path, "wb") as buffer:
+            buffer.write(profile_image.file.read())
+
+
+        base_url = str(request.base_url).rstrip("/")
+        profile_url = f"{base_url}/media/employee/{file_name}"
+
     employee = register_employee(
         session,
-        name=request.name,
-        email=request.email,
-        password=request.password,
-        task_capacity=request.task_capacity,
-        available_hours=request.available_hours,
-        phone_number=request.phone_number,
-        address=request.address,
-        birth_date=request.birth_date,
+        **request_data,
+        profile_image=image_path
     )
 
     token = generate_token(employee)
@@ -33,6 +46,7 @@ def register_controller(session: Session, request: RegisterRequest):
             "phone_number": employee.phone_number,
             "address": employee.address,
             "birth_date": employee.birth_date,
+            "profile_image": profile_url or "",
         },
         "access_token": token,
     }
