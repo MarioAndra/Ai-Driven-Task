@@ -1,14 +1,15 @@
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from typing import List
-import json
+from fastapi import BackgroundTasks
+
 from app.models.employee import Employee
 from app.models.EmployeeSkillLink import EmployeeSkillLink
 from app.models.subtask import Subtask
 from app.models.Assignment import Assignment
 from app.ai import task_assessor
-from pathlib import Path
 from app.services.email_service import EmailService
+
 
 class AIService:
     @staticmethod
@@ -51,12 +52,11 @@ class AIService:
         return formatted_employees
 
     @staticmethod
-    def get_assignments_for_tasks(db: Session, subtasks: List[Subtask]) -> List[dict]:
+    def get_assignments_for_tasks(db: Session, subtasks: List[Subtask], background_tasks: BackgroundTasks) -> List[dict]:
         employees_data = AIService.format_employees_for_ai(db)
         current_weights = task_assessor.load_model_weights()
         subtask_descriptions = [st.description for st in subtasks]
-        print("-> [AIService] Trying to assign tasks with AI model...",flush=True)
-
+        print("-> [AIService] Trying to assign tasks with AI model...", flush=True)
 
         assignments_result, _ = task_assessor.assign_tasks_with_learning(
             subtasks=subtask_descriptions,
@@ -85,8 +85,8 @@ class AIService:
                     new_assignments.append(new_assignment)
 
 
-                    print(f"  -> Attempting to send email to {employee.name}...", flush=True)
-                    EmailService.send_email(
+                    background_tasks.add_task(
+                        EmailService.send_email,
                         subject="New Task Assigned to You",
                         recipients=[employee.email],
                         template_name="assignment_notification.html",
@@ -97,6 +97,7 @@ class AIService:
                     )
 
         db.commit()
+
 
         assignments_with_details = []
         for assignment in new_assignments:

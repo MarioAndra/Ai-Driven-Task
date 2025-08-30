@@ -5,6 +5,7 @@ from app.models.skill import Skill
 from app.models.EmployeeSkillLink import EmployeeSkillLink
 from sqlalchemy import select
 import os
+from app.core.security import hash_password
 
 UPLOAD_DIR = "Media/employee"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -50,11 +51,11 @@ class EmployeeProfileService:
 
     @staticmethod
     def update_employee_profile(
-        db: Session,
-        employee_id: int,
-        update_data: dict,
-        request: Request,
-        profile_image: UploadFile = None
+            db: Session,
+            employee_id: int,
+            update_data: dict,
+            request: Request,
+            profile_image: UploadFile = None
     ) -> dict:
         employee = db.get(Employee, employee_id)
         if not employee:
@@ -64,6 +65,27 @@ class EmployeeProfileService:
             )
 
 
+        if "email" in update_data and update_data["email"] is not None:
+            new_email = update_data["email"]
+            if new_email != employee.email:
+                existing_employee = db.query(Employee).filter(Employee.email == new_email).first()
+                if existing_employee:
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT,
+                        detail="Email already registered by another user."
+                    )
+                employee.email = new_email
+
+            del update_data["email"]
+
+        if "password" in update_data and update_data["password"] is not None:
+            new_password = update_data["password"]
+
+            employee.password = hash_password(new_password)
+
+            del update_data["password"]
+
+
         if profile_image:
             file_ext = os.path.splitext(profile_image.filename)[1]
             file_name = f"{employee.email}{file_ext}"
@@ -71,7 +93,6 @@ class EmployeeProfileService:
 
             with open(image_path, "wb") as buffer:
                 buffer.write(profile_image.file.read())
-
 
             base_url = str(request.base_url).rstrip("/")
             employee.profile_image = f"{base_url}/media/employee/{file_name}"

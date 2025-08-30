@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.future import select
-from fastapi import HTTPException
+from fastapi import HTTPException, BackgroundTasks
 from app.models.task import Task
 from app.models.subtask import Subtask
 from app.models.Assignment import Assignment
@@ -23,7 +23,7 @@ class TaskService:
         return {"task": new_task, "prefilled_details": prefilled_details, "questions": questions}
 
     @staticmethod
-    def generate_and_assign_subtasks(task_id: int, payload: AnswersPayload, db: Session):
+    def generate_and_assign_subtasks(task_id: int, payload: AnswersPayload, db: Session, background_tasks: BackgroundTasks):
         print("-> [TaskService] Trying to build subtasks...", flush=True)
         subtask_descriptions = task_assessor.build_subtasks_from_answers(
             payload.answers,
@@ -42,9 +42,8 @@ class TaskService:
             db.refresh(st)
 
 
-        assignments = AIService.get_assignments_for_tasks(db, new_subtasks)
+        assignments = AIService.get_assignments_for_tasks(db, new_subtasks, background_tasks)
         return assignments
-
 
     @staticmethod
     def index(db: Session):
