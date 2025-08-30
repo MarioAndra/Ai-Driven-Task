@@ -22,7 +22,7 @@ class EmployeeProfileResponse(BaseModel):
     skills: List[SkillResponse]
     task_capacity: Optional[int] = None
     available_hours: Optional[int] = None
-    profile_image: Optional[str] = ""
+    status: Optional[str] = None
 
     class Config:
         orm_mode = True
