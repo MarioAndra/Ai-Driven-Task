@@ -1,4 +1,4 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 from app.models.Admin import Admin
 from app.core.security import hash_password
 from app.core.config import settings
@@ -7,19 +7,20 @@ from sqlalchemy import create_engine
 
 engine = create_engine(settings.DATABASE_URL)
 
+
 def create_admin_user():
-
-
     admin_name = "admin"
     admin_email = "admin@example.com"
-
-    admin_password = "strong_and_secure_password"
+    admin_password = "admin"
 
     with Session(engine) as session:
 
-        existing_admin = session.query(Admin).filter(Admin.email == admin_email).first()
-        if existing_admin:
+        existing_admin = session.exec(
+            select(Admin).where(Admin.email == admin_email)
+        ).first()
 
+        if existing_admin:
+            print("✅ Admin user already exists.")
             return
 
 
@@ -33,6 +34,8 @@ def create_admin_user():
         session.add(new_admin)
         session.commit()
         session.refresh(new_admin)
+
+        print(f"✅ Admin user created: {new_admin.email}")
 
 
 if __name__ == "__main__":
