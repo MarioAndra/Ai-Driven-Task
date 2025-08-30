@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from fastapi import Request
 from app.services.employee_profile_service import EmployeeProfileService
 from app.models.employee import Employee
 
@@ -13,9 +12,8 @@ class EmployeeProfileController:
     def update_my_profile(
         db: Session,
         current_employee: Employee,
-        update_data: dict,
-        request: Request
+        update_data: dict
     ) -> dict:
         return EmployeeProfileService.update_employee_profile(
-            db, current_employee.id, update_data, request
+            db, current_employee.id, update_data
         )

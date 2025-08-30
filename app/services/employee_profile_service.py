@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status, Request
+from fastapi import HTTPException, status
 from app.models.employee import Employee
 from app.models.skill import Skill
 from app.models.EmployeeSkillLink import EmployeeSkillLink
@@ -47,10 +47,9 @@ class EmployeeProfileService:
 
     @staticmethod
     def update_employee_profile(
-            db: Session,
-            employee_id: int,
-            update_data: dict,
-            request: Request
+        db: Session,
+        employee_id: int,
+        update_data: dict
     ) -> dict:
         employee = db.get(Employee, employee_id)
         if not employee:
@@ -59,7 +58,7 @@ class EmployeeProfileService:
                 detail="Employee not found."
             )
 
-        # معالجة الإيميل
+        # Handle email updates
         if "email" in update_data and update_data["email"] is not None:
             new_email = update_data["email"]
             if new_email != employee.email:
@@ -72,16 +71,15 @@ class EmployeeProfileService:
                 employee.email = new_email
             del update_data["email"]
 
-
+        # Handle password updates
         if "password" in update_data and update_data["password"] is not None:
             new_password = update_data["password"]
             employee.password = hash_password(new_password)
             del update_data["password"]
 
-
+        # Update other fields dynamically
         for key, value in update_data.items():
-            if value is not None:
-                setattr(employee, key, value)
+            setattr(employee, key, value)
 
         db.add(employee)
         db.commit()
