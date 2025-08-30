@@ -13,7 +13,8 @@ class EmployeeProfileController:
         db: Session,
         current_employee: Employee,
         update_data: dict
-    ) -> dict:
+    ) -> dict: 
         return EmployeeProfileService.update_employee_profile(
             db, current_employee.id, update_data
         )
+
