@@ -1,21 +1,27 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.core.database import get_session
 from app.api.v1.admin.task_controller import TaskController
-
 from app.schemas.task import TaskCreate, AnswersPayload
-router = APIRouter()
 
+router = APIRouter()
 
 @router.post("/")
 def create(task_in: TaskCreate, db: Session = Depends(get_session)):
     return TaskController.create(task_in, db)
 
+
 @router.post("/{task_id}/process-answers")
-async def process_answers(task_id: int, payload: AnswersPayload, db: Session = Depends(get_session)):
-    return  TaskController.generate_and_assign_subtasks(task_id, payload, db)
+async def process_answers(
+    task_id: int,
+    payload: AnswersPayload,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_session)
+):
+    return TaskController.generate_and_assign_subtasks(task_id, payload, db, background_tasks)
+
 
 @router.get("/")
 def index(db: Session = Depends(get_session)):
@@ -23,7 +29,11 @@ def index(db: Session = Depends(get_session)):
 
 
 @router.get("/{task_id}")
-def show(task_id: int, status: Optional[str] = Query(None), db: Session = Depends(get_session)):
+def show(
+    task_id: int,
+    status: Optional[str] = Query(None),
+    db: Session = Depends(get_session)
+):
     return TaskController.show(task_id, db, status)
 
 

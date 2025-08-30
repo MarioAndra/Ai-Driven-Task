@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, status, Request, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from typing import Optional
+from datetime import date
+from pydantic import EmailStr
 
 from app.core.database import get_session
 from app.api.v1.employee.employee_profile_controller import EmployeeProfileController
@@ -41,6 +43,10 @@ def update_employee_profile_endpoint(
     address: Optional[str] = Form(None),
     task_capacity: Optional[int] = Form(None),
     available_hours: Optional[int] = Form(None),
+    birth_date: Optional[date] = Form(None),
+    # إضافة حقلي الإيميل وكلمة السر هنا
+    email: Optional[EmailStr] = Form(None),
+    password: Optional[str] = Form(None),
     profile_image: Optional[UploadFile] = File(None)
 ):
     update_data = {
@@ -49,6 +55,9 @@ def update_employee_profile_endpoint(
         "address": address,
         "task_capacity": task_capacity,
         "available_hours": available_hours,
+        "birth_date": birth_date,
+        "email": email,
+        "password": password
     }
 
     return EmployeeProfileController.update_my_profile(
