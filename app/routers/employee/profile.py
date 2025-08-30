@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, status, Request, UploadFile, File, Form
+from fastapi import APIRouter, Depends, status, Request
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import date
-from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
 
 from app.core.database import get_session
 from app.api.v1.employee.employee_profile_controller import EmployeeProfileController
@@ -14,6 +14,19 @@ router = APIRouter(
     prefix="/profile",
     tags=["Employee Profile"]
 )
+
+
+class EmployeeProfileUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    phone_number: Optional[str] = None
+    address: Optional[str] = None
+    task_capacity: Optional[int] = None
+    available_hours: Optional[int] = None
+    birth_date: Optional[date] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+    status: Optional[str] = None
+
 
 @router.get(
     "/",
@@ -36,30 +49,10 @@ def get_employee_profile_endpoint(
 )
 def update_employee_profile_endpoint(
     request: Request,
+    update_data: EmployeeProfileUpdateRequest,
     db: Session = Depends(get_session),
-    current_employee: Employee = Depends(get_current_employee),
-    name: Optional[str] = Form(None),
-    phone_number: Optional[str] = Form(None),
-    address: Optional[str] = Form(None),
-    task_capacity: Optional[int] = Form(None),
-    available_hours: Optional[int] = Form(None),
-    birth_date: Optional[date] = Form(None),
-    # إضافة حقلي الإيميل وكلمة السر هنا
-    email: Optional[EmailStr] = Form(None),
-    password: Optional[str] = Form(None),
-    profile_image: Optional[UploadFile] = File(None)
+    current_employee: Employee = Depends(get_current_employee)
 ):
-    update_data = {
-        "name": name,
-        "phone_number": phone_number,
-        "address": address,
-        "task_capacity": task_capacity,
-        "available_hours": available_hours,
-        "birth_date": birth_date,
-        "email": email,
-        "password": password
-    }
-
     return EmployeeProfileController.update_my_profile(
-        db, current_employee, update_data, request, profile_image
+        db, current_employee, update_data.dict(), request
     )

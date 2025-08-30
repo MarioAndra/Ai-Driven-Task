@@ -1,14 +1,10 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status, Request, UploadFile
+from fastapi import HTTPException, status, Request
 from app.models.employee import Employee
 from app.models.skill import Skill
 from app.models.EmployeeSkillLink import EmployeeSkillLink
 from sqlalchemy import select
-import os
 from app.core.security import hash_password
-
-UPLOAD_DIR = "Media/employee"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 class EmployeeProfileService:
@@ -46,7 +42,7 @@ class EmployeeProfileService:
             "skills": skills_list,
             "task_capacity": employee.task_capacity,
             "available_hours": employee.available_hours,
-            "profile_image": employee.profile_image or ""
+            "status": employee.status
         }
 
     @staticmethod
@@ -54,8 +50,7 @@ class EmployeeProfileService:
             db: Session,
             employee_id: int,
             update_data: dict,
-            request: Request,
-            profile_image: UploadFile = None
+            request: Request
     ) -> dict:
         employee = db.get(Employee, employee_id)
         if not employee:
@@ -64,7 +59,7 @@ class EmployeeProfileService:
                 detail="Employee not found."
             )
 
-
+        # معالجة الإيميل
         if "email" in update_data and update_data["email"] is not None:
             new_email = update_data["email"]
             if new_email != employee.email:
@@ -75,27 +70,13 @@ class EmployeeProfileService:
                         detail="Email already registered by another user."
                     )
                 employee.email = new_email
-
             del update_data["email"]
+
 
         if "password" in update_data and update_data["password"] is not None:
             new_password = update_data["password"]
-
             employee.password = hash_password(new_password)
-
             del update_data["password"]
-
-
-        if profile_image:
-            file_ext = os.path.splitext(profile_image.filename)[1]
-            file_name = f"{employee.email}{file_ext}"
-            image_path = os.path.join(UPLOAD_DIR, file_name)
-
-            with open(image_path, "wb") as buffer:
-                buffer.write(profile_image.file.read())
-
-            base_url = str(request.base_url).rstrip("/")
-            employee.profile_image = f"{base_url}/media/employee/{file_name}"
 
 
         for key, value in update_data.items():
