@@ -139,3 +139,4 @@
 2025-08-30 03:08:18,713 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
 2025-08-30 03:08:21,800 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
 2025-08-30 16:41:33,276 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos75@gmail.com']
+2025-08-31 21:43:51,251 - app.services.email_service - INFO - Email successfully sent to: ['marioandrawos02@gmail.com']
