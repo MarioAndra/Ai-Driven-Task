@@ -66,11 +66,19 @@ class TaskService:
 
         subtasks_data = []
         for sub in subtasks:
+            assignment_id = None
+            assigned_employee = "N/A"
+
+            if sub.assignments and len(sub.assignments) > 0:
+                assignment_id = sub.assignments[0].id
+                assigned_employee = sub.assignments[0].employee.name if sub.assignments[0].employee else "N/A"
+
             subtasks_data.append({
                 "id": sub.id,
                 "description": sub.description,
                 "status": sub.status,
-                "assigned_employee": sub.assigned_employee
+                "assigned_employee": assigned_employee,
+                "assignment_id": assignment_id
             })
 
         return {
