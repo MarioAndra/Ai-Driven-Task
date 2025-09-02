@@ -1,7 +1,7 @@
 
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status,BackgroundTasks
 from app.models.subtask import Subtask
 from app.models.employee import Employee
 from app.models.Assignment import Assignment
@@ -60,8 +60,7 @@ class SubTaskService:
                 "employee_id": employee.id}
 
     @staticmethod
-    def update_assignment(db: Session, assignment_id: int, update_data: dict):
-
+    def update_assignment(db: Session, assignment_id: int, update_data: dict, background_tasks: BackgroundTasks):
         new_employee_id = update_data.get("employee_id")
         if not new_employee_id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="New Employee ID is required.")
@@ -70,7 +69,6 @@ class SubTaskService:
         if not assignment:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail=f"Assignment with id {assignment_id} not found.")
-
 
         subtask = db.get(Subtask, assignment.sub_task_id)
         if not subtask:
@@ -87,8 +85,8 @@ class SubTaskService:
         db.refresh(assignment)
 
 
-        print(f"  -> Sending re-assignment email to {new_employee.email}...")
-        EmailService.send_email(
+        background_tasks.add_task(
+            EmailService.send_email,
             subject="A Task Has Been Re-assigned to You",
             recipients=[new_employee.email],
             template_name="assignment_notification.html",

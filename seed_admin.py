@@ -11,7 +11,7 @@ engine = create_engine(settings.DATABASE_URL)
 def create_admin_user():
     admin_name = "admin"
     admin_email = "admin@example.com"
-    admin_password = "admin"
+    admin_password = "adminadmin"
 
     with Session(engine) as session:
 
