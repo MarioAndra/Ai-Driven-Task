@@ -131,10 +131,7 @@ QUESTION_TEMPLATES = {
     "devops": [
         "Do you require CI/CD pipelines or infrastructure-as-code?"
     ],
-    "general": [
-        "What is the expected timeline and budget?",
-        "Who are the stakeholders and the approval process?"
-    ]
+   
 }
 
 DEFAULT_WEIGHTS = {"w_match": 1.0, "w_experience": 1.0, "w_availability": 1.0, "w_load_penalty": 0.5}
